@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="First Name"
-        android:inputType="phone"
         android:textColor="#F2F1F3"
         android:textColorHint="#FFFEFE"
         android:textSize="19sp"
@@ -24,12 +23,12 @@
 
 
     <EditText
-        android:id="@+id/phone"
+        android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Email"
-        android:inputType="phone"
+        android:inputType="textEmailAddress"
         android:textColor="#F2F1F3"
         android:textColorHint="#FFFEFE"
         android:textSize="19sp"

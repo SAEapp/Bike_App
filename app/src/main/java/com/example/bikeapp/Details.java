@@ -52,8 +52,8 @@ public class Details extends AppCompatActivity {
                     String eMail = email.getText().toString();
 
                     Map<String,Object> user = new HashMap<>();
-                    user.put("fName",fName.getText().toString());
-                    user.put("email",email.getText().toString());
+                    user.put("fName",fullName);
+                    user.put("email",eMail);
 
                     docRef.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
