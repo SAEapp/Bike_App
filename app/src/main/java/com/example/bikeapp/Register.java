@@ -1,6 +1,7 @@
 package com.example.bikeapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.ObjectAnimator;
@@ -19,13 +20,22 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
@@ -40,11 +50,14 @@ public class Register extends AppCompatActivity {
     public static final String TAG = "TAG";
     private EditText mFullName, mPassword,mEmail,codeEnter;
     private Button mRegisterBtn,phBtn;
+    //private Button google_signinBtn;
+    private GoogleSignInClient mgoogleSignInClient;
     private TextView mLoginBtn,state;
     private FirebaseAuth fAuth;
     private FirebaseFirestore fStore;
     private String userID;
     private Dialog waiting;
+    private int RC_SIGN_IN = 1;
     ProgressBar progressBar;
     CountryCodePicker codePicker;
     String verificationId;
@@ -70,6 +83,10 @@ public class Register extends AppCompatActivity {
         state = findViewById(R.id.state);
         codePicker = findViewById(R.id.ccp);
         progressBar = findViewById(R.id.progressBar);
+
+        //google_signinBtn = (SignInButton)findViewById(R.id.google_signin);
+        SignInButton signInButton = findViewById(R.id.google_signin);
+        signInButton.setSize(SignInButton.SIZE_STANDARD);
 
         waiting = new Dialog(Register.this);
         waiting.setContentView(R.layout.waiting_progressbar);
@@ -175,8 +192,82 @@ public class Register extends AppCompatActivity {
                 finish();
             }
         });
+
+        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        mgoogleSignInClient = GoogleSignIn.getClient(this,googleSignInOptions);
+
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signIn();
+            }
+        });
+
     }
 
+    private void signIn() {
+
+        Intent signInIntent = mgoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent,RC_SIGN_IN);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == RC_SIGN_IN){
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        }
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+
+        try{
+            GoogleSignInAccount acc = completedTask.getResult(ApiException.class);
+            Toast.makeText(this, "Signed In Successfully", Toast.LENGTH_SHORT).show();
+            FirebaseGoogleAuth(acc);
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+        }
+        catch (ApiException e){
+            Toast.makeText(this, "Sign In Failed", Toast.LENGTH_SHORT).show();
+            FirebaseGoogleAuth(null);
+        }
 
 
+    }
+
+    private void FirebaseGoogleAuth(GoogleSignInAccount account) {
+        AuthCredential authCredential = GoogleAuthProvider.getCredential(account.getIdToken(),null);
+        fAuth.signInWithCredential(authCredential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+
+                if(task.isSuccessful()){
+                    Toast.makeText(Register.this, "Successful", Toast.LENGTH_SHORT).show();
+                    FirebaseUser user = fAuth.getCurrentUser();
+                    updateUI(user);
+                }
+                else {
+                    Toast.makeText(Register.this, "Failed", Toast.LENGTH_SHORT).show();
+                    updateUI(null);
+                }
+
+            }
+        });
+    }
+
+    private void updateUI(FirebaseUser fUser) {
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+        if(account != null){
+            String fName = account.getDisplayName();
+            String email = account.getEmail();
+            String id = account.getId();
+        }
+    }
 }
