@@ -64,6 +64,18 @@ public class Register extends AppCompatActivity {
     PhoneAuthProvider.ForceResendingToken token;
     Boolean verificationInProgress=false;
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser user = fAuth.getCurrentUser();
+        if(user != null){
+
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
+
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -216,58 +228,80 @@ public class Register extends AppCompatActivity {
 
     }
 
+
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == RC_SIGN_IN){
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
-        }
-    }
-
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-
-        try{
-            GoogleSignInAccount acc = completedTask.getResult(ApiException.class);
-            Toast.makeText(this, "Signed In Successfully", Toast.LENGTH_SHORT).show();
-            FirebaseGoogleAuth(acc);
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            finish();
-        }
-        catch (ApiException e){
-            Toast.makeText(this, "Sign In Failed", Toast.LENGTH_SHORT).show();
-            FirebaseGoogleAuth(null);
-        }
-
-
-    }
-
-    private void FirebaseGoogleAuth(GoogleSignInAccount account) {
-        AuthCredential authCredential = GoogleAuthProvider.getCredential(account.getIdToken(),null);
-        fAuth.signInWithCredential(authCredential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-
-                if(task.isSuccessful()){
-                    Toast.makeText(Register.this, "Successful", Toast.LENGTH_SHORT).show();
-                    FirebaseUser user = fAuth.getCurrentUser();
-                    updateUI(user);
-                }
-                else {
-                    Toast.makeText(Register.this, "Failed", Toast.LENGTH_SHORT).show();
-                    updateUI(null);
-                }
-
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
+                firebaseAuthWithGoogle(account.getIdToken());
+            } catch (ApiException e) {
+                // Google Sign In failed, update UI appropriately
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                // ...
             }
-        });
+        }
     }
+
+    private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        fAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = fAuth.getCurrentUser();
+                            updateUI(user);
+                            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                            startActivity(intent);
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(Register.this, "Authentication failed", Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
+
 
     private void updateUI(FirebaseUser fUser) {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         if(account != null){
             String fName = account.getDisplayName();
             String email = account.getEmail();
-            String id = account.getId();
+            final String id = account.getId();
+
+            userID = fUser.getUid();
+
+            final DocumentReference docRef = fStore.collection("users").document(userID);
+
+            Map<String,Object> user = new HashMap<>();
+            user.put("fName",fName);
+            user.put("email",email);
+
+            docRef.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d("tag", "onSuccess: User Profile Created." + userID);
+                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                    finish();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d("tag", "onFailure: Failed to Create User " + e.toString());
+                }
+            });
         }
     }
 }
