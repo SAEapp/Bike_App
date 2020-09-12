@@ -163,7 +163,11 @@ public class Register extends AppCompatActivity {
                             Map<String, Object> user = new HashMap<>();
                             user.put("fName", fullName);
                             user.put("email", email);
-                            //user.put("phone", phone);
+                            user.put("bike_rented",false);
+                            user.put("phone",0);
+                            user.put("pickup_time",0);
+                            user.put("payment_status","N/A");
+
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {

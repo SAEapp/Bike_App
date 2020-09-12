@@ -54,6 +54,10 @@ public class Details extends AppCompatActivity {
                     Map<String,Object> user = new HashMap<>();
                     user.put("fName",fullName);
                     user.put("email",eMail);
+                    user.put("phone",0);
+                    user.put("bike_rented",false);
+                    user.put("pickup_time",0);
+                    user.put("payment_status","N/A");
 
                     docRef.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
