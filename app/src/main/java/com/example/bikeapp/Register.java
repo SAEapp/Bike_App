@@ -180,7 +180,7 @@ public class Register extends AppCompatActivity {
                                 }
                             });
 
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            startActivity(new Intent(getApplicationContext(), HomePage.class));
                             overridePendingTransition(android.R.anim.fade_in, R.anim.zoom);
                             finish();
 
