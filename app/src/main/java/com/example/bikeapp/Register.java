@@ -108,7 +108,7 @@ public class Register extends AppCompatActivity {
 
 
         if (fAuth.getCurrentUser() != null ) {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), HomePage.class));
             finish();
         }
 
@@ -210,7 +210,7 @@ public class Register extends AppCompatActivity {
         });
 
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
+                //.requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
