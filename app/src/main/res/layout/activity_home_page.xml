@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="SELECT ELECTRIC BIKE"
+        android:text="SELECT YOUR RIDE"
         android:textColor="@color/white"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -170,7 +170,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginRight="32dp"
             android:background="@drawable/rounded_button"
-            android:text="RENT"
+            android:text="NEXT"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />

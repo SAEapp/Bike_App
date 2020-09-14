@@ -29,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
                 logout(v);
                 //FirebaseAuth.getInstance().signOut();
-
-
             }
         });
 

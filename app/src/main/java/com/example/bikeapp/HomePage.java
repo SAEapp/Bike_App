@@ -3,11 +3,9 @@ package com.example.bikeapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.FontResourcesParserCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -16,10 +14,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -41,10 +37,8 @@ public class HomePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
-        ActionBar actionBar= getSupportActionBar();
-        actionBar.hide();
 
-
+//        getSupportActionBar().hide();
         //Default initial stage
         Gate=0;
         Bicycle=0;
@@ -59,14 +53,12 @@ public class HomePage extends AppCompatActivity {
         saraswati=findViewById(R.id.saraswatiBtn);
         //FireStore
         firestore= FirebaseFirestore.getInstance();
+
         viewPager=findViewById(R.id.viewPager2);
 
         //Bicycle Name and Price
         final String name[]={"GreenWalk Bicycle", "StarTrek Bicycle"};
         final String price[]={"₹45","₹60"};
-
-
-
 
         CheckAvailabilty(Gate,Bicycle);
 
@@ -242,7 +234,7 @@ public class HomePage extends AppCompatActivity {
     public void onClickRent(int gate, int bicycle){
         final String f_cycle[]={"available_bike1", "available_bike2","available_bike3"};
         final String f_gate[]={"Ganga", "Yamuna", "Saraswati"};
-        Intent i= new Intent(HomePage.this, Pricing.class);
+        Intent i= new Intent(HomePage.this, BookingActivity.class);
         i.putExtra("Bicycle", f_cycle[bicycle]);
         i.putExtra("Gate",f_gate[gate]);
         startActivity(i);
