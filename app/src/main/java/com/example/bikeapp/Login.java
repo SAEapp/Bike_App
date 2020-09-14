@@ -72,7 +72,7 @@ public class Login extends AppCompatActivity {
                     mPassword.setError("Password must be more than 6 characters.");
                     return;
                 }
-                waiting.show();
+                //waiting.show();
 
                 //authenticate the user
 
@@ -81,7 +81,7 @@ public class Login extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), HomePage.class);
                             Toast.makeText(Login.this, "Logged In Successfully.", Toast.LENGTH_SHORT).show();
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
