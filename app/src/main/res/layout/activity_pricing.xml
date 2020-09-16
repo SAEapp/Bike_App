@@ -26,33 +26,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tbar" />
 
-    <EditText
-        android:id="@+id/address1"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginTop="2dp"
-        android:gravity="center_vertical"
-        android:hint="Apartment/Home Address"
-        android:textColor="@color/white"
-        android:textColorHint="#A9FFFFFF"
-        android:textSize="20sp"
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spinner"
+        android:overlapAnchor="false"
+        android:background="@drawable/style_spinner"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-
-    <EditText
-        android:id="@+id/address2"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginTop="5dp"
-        android:gravity="center_vertical"
-        android:hint="Landmark"
-        android:textColor="@color/white"
-        android:textColorHint="#A9FFFFFF"
-        android:textSize="20sp"
-
-        app:layout_constraintStart_toStartOf="@+id/address1"
-        app:layout_constraintTop_toBottomOf="@+id/address1" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
