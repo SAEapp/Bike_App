@@ -9,8 +9,10 @@
     <string name="log_out">Log Out</string>
     <string name="phone_number">Phone Number</string>
     <string name="register">REGISTER</string>
-    <string name="already_registered_login_here">Already Registered ? Login Here</string>
+    <string name="already_registered">Already Registered?</string>
+    <string name="login_here">" "Login here</string>
     <string name="please_wait">Please Wait...</string>
+    <string name="or">OR</string>
 
     <string-array name="renting_hours">
         <item> 1 hour </item>

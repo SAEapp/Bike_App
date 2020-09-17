@@ -48,7 +48,7 @@ public class Register extends AppCompatActivity {
     private Button mRegisterBtn,fbBtn;
     //private Button google_signinBtn;
     private GoogleSignInClient mgoogleSignInClient;
-    private TextView mLoginBtn,state;
+    private TextView mLoginBtn,state,alreadyReg,or;
     private FirebaseAuth fAuth;
     private FirebaseFirestore fStore;
     private String userID;
@@ -86,6 +86,8 @@ public class Register extends AppCompatActivity {
         fbBtn = findViewById(R.id.fbBtn);
         phnNo = findViewById(R.id.phnNo);
         mLoginBtn = findViewById(R.id.createText);
+        or = findViewById(R.id.or_text);
+        alreadyReg = findViewById(R.id.alreadyReg);
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         codeEnter = findViewById(R.id.codeEnter);
@@ -95,7 +97,8 @@ public class Register extends AppCompatActivity {
 
         //google_signinBtn = (SignInButton)findViewById(R.id.google_signin);
         SignInButton signInButton = findViewById(R.id.google_signin);
-        signInButton.setSize(SignInButton.SIZE_STANDARD);
+        signInButton.setSize(SignInButton.SIZE_WIDE);
+        signInButton.setColorScheme(SignInButton.COLOR_LIGHT);
 
         waiting = new Dialog(Register.this);
         waiting.setContentView(R.layout.waiting_progressbar);
