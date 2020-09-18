@@ -101,10 +101,12 @@
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
             android:background="@drawable/rounded_button"
+            android:gravity="center"
             android:fontFamily="@font/roboto_bold"
             android:text="Generate OTP"
+            android:textAllCaps="false"
             android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
     </LinearLayout>
 
@@ -118,11 +120,44 @@
         android:paddingStart="42dp"
         android:paddingTop="16dp"
         android:paddingEnd="42dp"
-        android:paddingBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginBottom="12dp">
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="?android:listDivider"
+                android:backgroundTint="@color/white"
+                android:layout_weight="0.33"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/or_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/or"
+                android:textColor="@color/colorInactiveText"
+                android:textSize="12sp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                />
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="?android:listDivider"
+                android:backgroundTint="@color/white"
+                android:layout_weight="0.33"
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
 
         <Button
             android:id="@+id/fbBtn"
@@ -131,35 +166,63 @@
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="24dp"
+            android:paddingLeft="16dp"
             android:background="@drawable/fb_rounded_button"
-            android:fontFamily="@font/roboto_medium"
-            android:text="Login using Facebook"
+            android:drawableStart="@drawable/ic_facebook_2"
+            android:fontFamily="@font/roboto_regular"
+            android:text="Sign in with Facebook"
             android:textAllCaps="false"
             android:textColor="#ffffff"
-            android:textStyle="bold"
-            tools:ignore="MissingConstraints"
-            tools:textSize="14sp" />
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/google_signin"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
-            android:background="@drawable/google_rounded_button"
-            android:contextClickable="false"
+            android:contextClickable="true"
             android:tooltipText="Login with Google">
 
         </com.google.android.gms.common.SignInButton>
 
-        <TextView
-            android:id="@+id/createText"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/already_registered_login_here"
-            android:textColor="#ffffff"
-            android:textSize="12sp"
-            android:textStyle="normal" />
+            android:layout_gravity="center"
+            android:layout_marginTop="24dp">
+
+            <TextView
+                android:id="@+id/alreadyReg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_light"
+                android:text="@string/already_registered"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/createText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/login_here"
+                android:textColor="@color/colorPrimaryGreen"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="64dp"
+            android:layout_marginBottom="16dp"
+            android:background="?android:listDivider"
+            android:backgroundTint="@color/white" />
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -167,8 +230,6 @@
         android:id="@+id/headerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="35dp"
         android:fontFamily="@font/roboto_bold"
         android:text="REGISTER"
         android:textColor="#FFFFFF"
@@ -176,8 +237,7 @@
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
