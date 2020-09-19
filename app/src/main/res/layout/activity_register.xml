@@ -34,10 +34,9 @@
             android:hint="Username"
             android:inputType="textPersonName"
             android:padding="10dp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textColorHint="@color/colorInactiveText"
-            android:textSize="16sp"
-            android:textStyle="normal" />
+            android:textSize="16sp"/>
 
         <EditText
             android:id="@+id/email"
@@ -51,11 +50,9 @@
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:padding="10dp"
-
             android:textColor="#FFFFFF"
             android:textColorHint="@color/colorInactiveText"
-            android:textSize="16sp"
-            android:textStyle="normal" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/password"
@@ -71,8 +68,7 @@
             android:padding="10dp"
             android:textColor="#FFFFFF"
             android:textColorHint="@color/colorInactiveText"
-            android:textSize="16sp"
-            android:textStyle="normal" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/phnNo"
@@ -88,8 +84,7 @@
             android:padding="10dp"
             android:textColor="#FFFFFF"
             android:textColorHint="@color/colorInactiveText"
-            android:textSize="16sp"
-            android:textStyle="normal" />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/registerBtn"
@@ -166,7 +161,7 @@
             android:background="@drawable/fb_rounded_button"
             android:drawableStart="@drawable/ic_facebook_2"
             android:fontFamily="@font/roboto_regular"
-            android:paddingLeft="16dp"
+            android:paddingStart="16dp"
             android:text="Sign in with Facebook"
             android:textAllCaps="false"
             android:textColor="#ffffff"
