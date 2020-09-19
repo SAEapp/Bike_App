@@ -22,4 +22,14 @@
         <item> 5 hours </item>
         <item> 6 hours </item>
     </string-array>
+
+    <string-array name="am_pm">
+        <item> A.M </item>
+        <item> P.M </item>
+    </string-array>
+
+    <string-array name="payment_modes">
+        <item>   Pay On Pick-Up </item>
+        <item>   G-Pay </item>
+    </string-array>
 </resources>

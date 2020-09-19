@@ -160,7 +160,7 @@ public class PhoneAuth extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if(documentSnapshot.exists()){
-                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                    startActivity(new Intent(getApplicationContext(),HomePage.class));
                     finish();
                 }else {
                     //Toast.makeText(Register.this, "Profile Do not Exists.", Toast.LENGTH_SHORT).show();

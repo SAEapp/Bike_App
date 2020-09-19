@@ -167,6 +167,8 @@ public class Register extends AppCompatActivity {
                             user.put("phone",0);
                             user.put("rent_duration",' ');
                             user.put("payment_status","N/A");
+                            user.put("payment_mode","N/A");
+                            user.put("pickup_time","N/A");
 
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override

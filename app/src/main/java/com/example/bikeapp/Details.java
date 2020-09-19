@@ -58,6 +58,8 @@ public class Details extends AppCompatActivity {
                     user.put("bike_rented",false);
                     user.put("rent_duration",0);
                     user.put("payment_status","N/A");
+                    user.put("payment_mode","N/A");
+                    user.put("pickup_time","N/A");
 
                     docRef.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
