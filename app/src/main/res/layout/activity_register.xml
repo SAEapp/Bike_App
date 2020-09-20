@@ -15,8 +15,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/lowerswipe"
         android:orientation="vertical"
-        android:paddingStart="42dp"
-        android:paddingEnd="42dp"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayoutCompat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -25,81 +25,73 @@
             android:id="@+id/fullName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="40dp"
             android:layout_marginBottom="32dp"
             android:background="@drawable/rectangle"
-            android:fontFamily="@font/roboto_medium"
+            android:drawableStart="@drawable/custom_username"
+            android:drawablePadding="12dp"
+            android:fontFamily="@font/roboto_regular"
             android:hint="Username"
             android:inputType="textPersonName"
             android:padding="10dp"
-            android:paddingStart="32dp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textColorHint="@color/colorInactiveText"
-            android:textSize="16sp"
-            android:textStyle="normal" />
+            android:textSize="16sp"/>
 
         <EditText
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-
             android:background="@drawable/rectangle"
-            android:ems="10"
-            android:fontFamily="@font/roboto_medium"
+            android:drawableStart="@drawable/custom_email"
+            android:drawablePadding="12dp"
+            android:fontFamily="@font/roboto_regular"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:padding="10dp"
-            android:paddingStart="32dp"
-
             android:textColor="#FFFFFF"
             android:textColorHint="@color/colorInactiveText"
-            android:textSize="16sp"
-            android:textStyle="normal" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-
             android:background="@drawable/rectangle"
-            android:fontFamily="@font/roboto_medium"
+            android:drawableStart="@drawable/custom_password"
+            android:drawablePadding="12dp"
+            android:fontFamily="@font/roboto_regular"
             android:hint="@string/password"
             android:inputType="textPassword"
             android:padding="10dp"
-            android:paddingStart="32dp"
             android:textColor="#FFFFFF"
             android:textColorHint="@color/colorInactiveText"
-            android:textSize="16sp"
-            android:textStyle="normal" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/phnNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-
             android:background="@drawable/rectangle"
-            android:ems="10"
-            android:fontFamily="@font/roboto_medium"
+            android:drawableStart="@drawable/custom_phone"
+            android:drawablePadding="12dp"
+            android:fontFamily="@font/roboto_regular"
             android:hint="@string/phone"
             android:inputType="phone"
             android:padding="10dp"
-            android:paddingStart="32dp"
-
             android:textColor="#FFFFFF"
             android:textColorHint="@color/colorInactiveText"
-            android:textSize="16sp"
-            android:textStyle="normal" />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/registerBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
             android:background="@drawable/rounded_button"
             android:fontFamily="@font/roboto_bold"
             android:gravity="center"
@@ -128,35 +120,35 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="center"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="12dp"
+            android:orientation="horizontal">
 
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
-                android:background="?android:listDivider"
-                android:backgroundTint="@color/white"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="0.33"
-                android:layout_gravity="center_vertical"/>
+                android:background="?android:listDivider"
+                android:backgroundTint="@color/white" />
 
             <TextView
                 android:id="@+id/or_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/or"
-                android:textColor="@color/colorInactiveText"
-                android:textSize="12sp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                />
+                android:text="@string/or"
+                android:textColor="@color/colorInactiveText"
+                android:textSize="12sp" />
+
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
-                android:background="?android:listDivider"
-                android:backgroundTint="@color/white"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="0.33"
-                android:layout_gravity="center_vertical"/>
+                android:background="?android:listDivider"
+                android:backgroundTint="@color/white" />
         </LinearLayout>
 
         <Button
@@ -166,10 +158,10 @@
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="24dp"
-            android:paddingLeft="16dp"
             android:background="@drawable/fb_rounded_button"
             android:drawableStart="@drawable/ic_facebook_2"
             android:fontFamily="@font/roboto_regular"
+            android:paddingStart="16dp"
             android:text="Sign in with Facebook"
             android:textAllCaps="false"
             android:textColor="#ffffff"
@@ -191,7 +183,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="24dp">
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp">
 
             <TextView
                 android:id="@+id/alreadyReg"
@@ -213,16 +206,6 @@
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_marginStart="64dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="64dp"
-            android:layout_marginBottom="16dp"
-            android:background="?android:listDivider"
-            android:backgroundTint="@color/white" />
-
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -232,8 +215,8 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_bold"
         android:text="REGISTER"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
+        android:textColor="@color/white"
+        android:textSize="32sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
