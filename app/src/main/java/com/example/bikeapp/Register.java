@@ -216,7 +216,7 @@ public class Register extends AppCompatActivity {
         });
 
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                //.requestIdToken(getString(R.string.default_web_client_id))
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
@@ -269,7 +269,7 @@ public class Register extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = fAuth.getCurrentUser();
                             updateUI(user);
-                            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                            Intent intent = new Intent(getApplicationContext(),HomePage.class);
                             startActivity(intent);
 
                         } else {
@@ -303,7 +303,7 @@ public class Register extends AppCompatActivity {
                 @Override
                 public void onSuccess(Void aVoid) {
                     Log.d("tag", "onSuccess: User Profile Created." + userID);
-                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                    startActivity(new Intent(getApplicationContext(),HomePage.class));
                     finish();
                 }
             }).addOnFailureListener(new OnFailureListener() {
