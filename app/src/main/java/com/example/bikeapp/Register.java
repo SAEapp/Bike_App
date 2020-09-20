@@ -167,9 +167,12 @@ public class Register extends AppCompatActivity {
                             user.put("bike_rented",false);
                             //user.put("phone",0);
                             user.put("rent_duration"," ");
-                            user.put("payment_status","N/A");
-                            user.put("payment_mode","N/A");
-                            user.put("pickup_time","N/A");
+                            user.put("payment_status","");
+                            user.put("payment_mode","");
+                            user.put("pickup_time","");
+                            user.put("est_price",0);
+                            user.put("current_pickup","");
+                            user.put("bike_selected","");
 
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
