@@ -14,8 +14,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -32,11 +35,16 @@ public class HomePage extends AppCompatActivity {
     private Integer Gate, Bicycle;
     private FirebaseFirestore firestore;
     private AlphaAnimation fadeout,fadeIn;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    DocumentReference documentReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        documentReference = db.collection("user").document("profile");
+
 
 //        getSupportActionBar().hide();
         //Default initial stage
@@ -240,4 +248,22 @@ public class HomePage extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void ShowProfile(View view) {
+        documentReference.get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                        if (task.getResult().exists()){
+                            Intent intent = new Intent(HomePage.this,Showprofile.class);
+                            startActivity(intent);
+
+                        }else{
+                            Intent intent = new Intent(HomePage.this,CreateProfile.class);
+                            startActivity(intent);
+                        }
+                    }
+                });
+
+    }
 }
