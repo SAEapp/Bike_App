@@ -17,6 +17,5 @@
                     android:src="@drawable/ic_arrow_drop_down_black_24dp"/>
             </item>
         </layer-list>
-
     </item>
 </selector>
