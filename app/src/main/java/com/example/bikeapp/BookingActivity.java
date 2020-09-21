@@ -53,13 +53,14 @@ public class BookingActivity extends AppCompatActivity {
 
         pickup_dis = (TextView)findViewById(R.id.pickup_display);
         bike_dis = (TextView)findViewById(R.id.bike_display);
-        est_price = (TextView)findViewById(R.id.est_price);        //figure this out later
+        est_price = (TextView)findViewById(R.id.est_price);
         hrs_dis = (EditText)findViewById(R.id.hrs_dis);
         min_dis = (EditText)findViewById(R.id.min_dis);
         continue_btn = findViewById(R.id.continue_btn);
 
         Bundle bundle = getIntent().getExtras();
         String pickup = "Pickup : " + bundle.get("Gate").toString();
+//        info.put("current_pickup",bundle.get("Gate").toString());
         pickup_dis.setText(pickup);
         String bike = "Bike : " + bundle.get("Bicycle").toString();          //this has to be changed later => replace with bike name
         bike_dis.setText(bike);
@@ -119,8 +120,18 @@ public class BookingActivity extends AppCompatActivity {
                 rent_duration =  spinner.getSelectedItem().toString();
                 pickup_time = hrs_dis.getText().toString() + ":" + min_dis.getText().toString() + " " + spinner2.getSelectedItem().toString();
                 payment_mode = spinner3.getSelectedItem().toString();
+
+//                Bundle bundle1 = getIntent().getExtras();
+//                info.put("bike_selected",bundle1.get("Bicycle").toString());
+//                info.put("current_pickup",bundle1.get("Gate").toString());
+//                info.put("payment_mode",payment_mode);
+//                info.put("pickup_time",pickup_time);
+//                info.put("rent_duration",rent_duration);
+//                info.put("est_price",est_cost);
+
                 Intent intent = new Intent(BookingActivity.this,PaymentActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -143,5 +154,6 @@ public class BookingActivity extends AppCompatActivity {
        }
        return time;
     }
+
 
 }

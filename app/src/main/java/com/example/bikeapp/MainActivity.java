@@ -11,10 +11,12 @@ import android.widget.Button;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.UploadTask;
 
 public class MainActivity extends AppCompatActivity {
 
     Button logOut;
+    UploadTask uploadTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,5 +40,11 @@ public class MainActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signOut();      //logout
         startActivity(new Intent(getApplicationContext(),Login.class));
         finish();
+    }
+
+    public void ShowProfile(View view) {
+        Intent intent = new Intent(MainActivity.this,CreateProfile.class);
+        startActivity(intent);
+
     }
 }
