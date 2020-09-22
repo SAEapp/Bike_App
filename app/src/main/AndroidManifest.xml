@@ -20,6 +20,8 @@
         <activity android:name=".HomePage" />
         <activity android:name=".Details" />
         <activity android:name=".PhoneAuth" />
+        <activity android:name=".CreateProfile"/>
+        <activity android:name=".Showprofile"/>
         <activity android:name=".Login" />
         <activity android:name=".Register">
             <intent-filter>

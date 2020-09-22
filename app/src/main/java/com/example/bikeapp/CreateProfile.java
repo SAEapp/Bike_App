@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -61,7 +62,7 @@ public class CreateProfile extends AppCompatActivity {
         progressBar = findViewById(R.id.progressbar_cp);
 
         documentReference = db.collection("user").document("profile");
-        storageReference = FirebaseStorage.getInstance().getReference("profile images");
+        storageReference = firebaseStorage.getInstance().getReference("profile images");
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,10 +89,12 @@ public class CreateProfile extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        assert data != null;
-        imageUri = data.getData();
+        if (requestCode == PICK_IMAGE || resultCode == RESULT_OK || data != null || data.getData() != null) {
 
-        Picasso.get().load(imageUri).into(imageView);
+            imageUri = data.getData();
+
+            Picasso.get().load(imageUri).into(imageView);
+        }
 
     }
     private String getFileExt(Uri uri){
@@ -102,24 +105,24 @@ public class CreateProfile extends AppCompatActivity {
 
     private void UploadData()
     {
-        final String name = et_name.getText().toString();
-        final String age = et_age.getText().toString();
-        final String email = et_email.getText().toString();
-        final String phno = et_phno.getText().toString();
+         final String name = et_name.getText().toString();
+         final String age = et_age.getText().toString();
+         final String email = et_email.getText().toString();
+         final String phno = et_phno.getText().toString();
 
-        if (!TextUtils.isEmpty(name) || !TextUtils.isEmpty(age) ||
-                !TextUtils.isEmpty(email) || !TextUtils.isEmpty(phno) || imageUri!=null){
+        if (!TextUtils.isEmpty(name) || !TextUtils.isEmpty(age) || !TextUtils.isEmpty(email) || !TextUtils.isEmpty(phno) || imageUri!=null)
+                {
 
             progressBar.setVisibility(View.VISIBLE);
             final StorageReference reference = storageReference.child(System.currentTimeMillis() + "." + getFileExt(imageUri));
 
             uploadTask = reference.putFile(imageUri);
 
-            Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                     if (!task.isSuccessful()){
-                        throw Objects.requireNonNull(task.getException());
+                        throw task.getException();
                     }
                     return reference.getDownloadUrl();
                 }
@@ -130,7 +133,7 @@ public class CreateProfile extends AppCompatActivity {
 
                             if (task.isSuccessful()){
                                 Uri downloadUri = task.getResult();
-                                Map<String,String> profile = new HashMap<>();
+                                Map<String ,String > profile = new HashMap<>();
                                 profile.put("name",name);
                                 profile.put("age",age);
                                 profile.put("phno",phno);
@@ -177,5 +180,43 @@ public class CreateProfile extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        documentReference.get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                        if (task.getResult().exists()){
+                            String name_result = task.getResult().getString("name");
+                            String age_result = task.getResult().getString("age");
+                            String email_result = task.getResult().getString("email");
+                            String phno_result = task.getResult().getString("phno");
+                            String Url = task.getResult().getString("url");
+
+                            Picasso.get().load(Url).into(imageView);
+
+                            et_name.setText(name_result);
+                            et_age.setText(age_result);
+                            et_email.setText(email_result);
+                            et_phno.setText(phno_result);
+
+
+
+                        }else {
+                            Toast.makeText(CreateProfile.this, "No Profile exists!", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
     }
 }
