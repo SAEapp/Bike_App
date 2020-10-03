@@ -3,7 +3,9 @@ package com.example.bikeapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -11,6 +13,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -29,6 +32,7 @@ public class Showprofile extends AppCompatActivity {
     DocumentReference documentReference;
     ImageView imageView;
     TextView nameEt,ageEt,emailEt,phnoEt;
+    FloatingActionButton floatingActionButton;
 
 
 
@@ -37,6 +41,7 @@ public class Showprofile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_showprofile);
 
+        floatingActionButton = findViewById(R.id.floatingbtn_sp);
         imageView = findViewById(R.id.imageView_sp);
         nameEt = findViewById(R.id.name_tv_sp);
         ageEt = findViewById(R.id.age_tv_sp);
@@ -44,7 +49,16 @@ public class Showprofile extends AppCompatActivity {
         phnoEt = findViewById(R.id.phno_tv_sp);
 
         documentReference = db.collection("user").document("profile");
-        storageReference = FirebaseStorage.getInstance().getReference("profile images");
+        storageReference = firebaseStorage.getInstance().getReference("profile images");
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Showprofile.this,CreateProfile.class);
+                startActivity(intent);
+            }
+        });
+
 
     }
 
@@ -57,7 +71,7 @@ public class Showprofile extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
-                        if (Objects.requireNonNull(task.getResult()).exists()){
+                        if (task.getResult().exists()){
                             String name_result = task.getResult().getString("name");
                             String age_result = task.getResult().getString("age");
                             String email_result = task.getResult().getString("email");
