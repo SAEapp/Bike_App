@@ -2,6 +2,7 @@ package com.example.bikeapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -26,7 +28,8 @@ import java.util.Map;
 
 public class BookingActivity extends AppCompatActivity {
 
-    private TextView pickup_dis,bike_dis,est_price;
+    private TextView pickup_dis,bike_dis,est_price,gate_name,bike_name;
+    private ImageView gate_icon,bike_icon;
     private EditText hrs_dis,min_dis;
     private Button continue_btn;
     private Dialog loading;
@@ -46,7 +49,7 @@ public class BookingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_booking);
 
         toolbar = findViewById(R.id.tbar);
-        toolbar.setTitle(" ");
+        toolbar.setTitle("Confirm Booking");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -54,16 +57,41 @@ public class BookingActivity extends AppCompatActivity {
         pickup_dis = (TextView)findViewById(R.id.pickup_display);
         bike_dis = (TextView)findViewById(R.id.bike_display);
         est_price = (TextView)findViewById(R.id.est_price);
+        gate_name =(TextView)findViewById(R.id.gate_name) ;
+        gate_icon =(ImageView)findViewById(R.id.gate_icon);
+        bike_name =(TextView)findViewById(R.id.bike_name) ;
+        bike_icon=(ImageView)findViewById(R.id.bike_icon);
         hrs_dis = (EditText)findViewById(R.id.hrs_dis);
         min_dis = (EditText)findViewById(R.id.min_dis);
         continue_btn = findViewById(R.id.continue_btn);
 
         Bundle bundle = getIntent().getExtras();
-        String pickup = "Pickup : " + bundle.get("Gate").toString();
+        String pickup = bundle.get("Gate").toString();
 //        info.put("current_pickup",bundle.get("Gate").toString());
-        pickup_dis.setText(pickup);
-        String bike = "Bike : " + bundle.get("Bicycle").toString();          //this has to be changed later => replace with bike name
-        bike_dis.setText(bike);
+        gate_name.setText(pickup);
+        String bike = bundle.get("Bicycle").toString();          //this has to be changed later => replace with bike name
+        bike_name.setText(bike);
+
+       if(pickup.equals("Ganga"))
+       {
+           gate_icon.setImageResource(R.drawable.ic_icon_gate_ganga);
+       }
+        if(pickup.equals("Yamuna"))
+        {
+            gate_icon.setImageResource(R.drawable.ic_icon_gate_yamuna);
+        }
+        if(pickup.equals("Saraswati"))
+        {
+            gate_icon.setImageResource(R.drawable.ic_icon_gate_saraswati);
+        }
+        if(bike.equals("available_bike1"))
+        {
+            gate_icon.setImageResource(R.drawable.ic_icon_bicycle1);
+        }
+        if(pickup.equals("available_bike2"))
+        {
+            gate_icon.setImageResource(R.drawable.ic_icon_bicycle3);
+        }
 
         hrs_dis.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "11")});
         min_dis.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "59")});

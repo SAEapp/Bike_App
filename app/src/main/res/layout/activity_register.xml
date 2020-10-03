@@ -19,6 +19,7 @@
         android:paddingEnd="32dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayoutCompat"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
 
         <EditText
@@ -35,8 +36,8 @@
             android:inputType="textPersonName"
             android:padding="10dp"
             android:textColor="@color/white"
-            android:textColorHint="@color/colorInactiveText"
-            android:textSize="16sp"/>
+            android:textColorHint="@color/homescreenfont"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/email"
@@ -51,7 +52,7 @@
             android:inputType="textEmailAddress"
             android:padding="10dp"
             android:textColor="#FFFFFF"
-            android:textColorHint="@color/colorInactiveText"
+            android:textColorHint="@color/homescreenfont"
             android:textSize="16sp" />
 
         <EditText
@@ -67,7 +68,7 @@
             android:inputType="textPassword"
             android:padding="10dp"
             android:textColor="#FFFFFF"
-            android:textColorHint="@color/colorInactiveText"
+            android:textColorHint="@color/homescreenfont"
             android:textSize="16sp" />
 
         <EditText
@@ -83,7 +84,7 @@
             android:inputType="phone"
             android:padding="10dp"
             android:textColor="#FFFFFF"
-            android:textColorHint="@color/colorInactiveText"
+            android:textColorHint="@color/homescreenfont"
             android:textSize="16sp" />
 
         <Button
@@ -97,11 +98,10 @@
             android:gravity="center"
             android:text="Generate OTP"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textSize="18sp" />
 
     </LinearLayout>
-
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/linearLayoutCompat"
@@ -139,7 +139,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:text="@string/or"
-                android:textColor="@color/colorInactiveText"
+                android:textColor="@color/homescreenfont"
                 android:textSize="12sp" />
 
             <View
@@ -162,11 +162,11 @@
             android:drawableStart="@drawable/ic_facebook_2"
             android:fontFamily="@font/roboto_regular"
             android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:text="Sign in with Facebook"
             android:textAllCaps="false"
             android:textColor="#ffffff"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textSize="14sp" />
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/google_signin"
