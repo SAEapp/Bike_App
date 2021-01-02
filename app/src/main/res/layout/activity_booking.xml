@@ -4,229 +4,348 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryBlack"
+    android:background="@color/colorPrimaryGreen"
     tools:context=".BookingActivity">
 
-    <include
+
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/tbar"
-        layout="@layout/toolbar" />
-
-    <LinearLayout
-        android:id="@+id/linn"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="80dp"
-        android:background="@drawable/selectedrect"
-        app:layout_constraintTop_toBottomOf="@+id/tbar" >
-
-        <TextView
-            android:id="@+id/pickup_display"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="Pickup :"
-            android:textColor="@color/white"
-            android:textSize="25sp"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/bike_display"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="Bike :"
-            android:textColor="@color/white"
-            android:textSize="25sp"
-            android:textStyle="bold"/>
-    </LinearLayout>
-
-
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Rent Duration"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        android:textStyle="bold"
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp"
+        app:layout_constraintBottom_toTopOf="@id/black_body"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.171"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linn" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Confirm Booking"
+        app:titleMargins="2dp">
 
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/spinner"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/style_spinner3"
-        android:overlapAnchor="false"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <TextView
-        android:id="@+id/txtvie6"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="Estimated Rent:"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/spinner"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+    </androidx.appcompat.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/txt44"
-        android:layout_width="30dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-
-        android:gravity="center"
-        android:text="Rs"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/est_price"
-        app:layout_constraintHorizontal_bias="0.567"
-        app:layout_constraintStart_toEndOf="@+id/txtvie6"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
-
-    <TextView
-        android:id="@+id/est_price"
-        android:layout_width="60dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/selectedrect"
-        android:gravity="center"
-        android:text="40"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.839"
-        app:layout_constraintStart_toStartOf="@+id/spinner"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
-
-    <TextView
-        android:id="@+id/txtvie7"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="12dp"
-        android:gravity="center"
-        android:text="Pickup Time:"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/txtvie6"
-        app:layout_constraintTop_toBottomOf="@+id/txtvie6" />
-
-    <EditText
-        android:id="@+id/hrs_dis"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/selectedrect"
-        android:gravity="center"
-        android:inputType="number"
-        android:text="00"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/txtvie7"
-        app:layout_constraintTop_toBottomOf="@+id/txtvie6" />
-
-    <EditText
-        android:id="@+id/min_dis"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/selectedrect"
-        android:gravity="center"
-        android:inputType="number"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:text="00"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/hi_text"
-        app:layout_constraintTop_toBottomOf="@+id/txtvie6" />
-
-    <TextView
-        android:id="@+id/hi_text"
-        android:layout_width="20dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="12dp"
-        android:gravity="center"
-        android:text=":"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/hrs_dis"
-        app:layout_constraintTop_toBottomOf="@+id/txtvie6" />
-
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/spinner2"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/style_spinner2"
-        android:outlineAmbientShadowColor="@color/white"
-        android:overlapAnchor="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/min_dis"
-        app:layout_constraintTop_toBottomOf="@+id/txtvie6" />
-
-    <TextView
-        android:id="@+id/txtView12"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:text="Mode of payment :"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/txtvie7"
-        app:layout_constraintTop_toBottomOf="@+id/txtvie7" />
-
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/spinner3"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/style_spinner3"
-        android:overlapAnchor="false"
-        app:layout_constraintStart_toStartOf="@+id/txtView12"
-        app:layout_constraintTop_toBottomOf="@+id/txtView12" />
-
-    <Button
-        android:id="@+id/continue_btn"
-        android:layout_width="350dp"
-        android:layout_height="50dp"
-        android:background="@drawable/selectedrect"
-        android:text="Continue To Payment"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:textSize="20sp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/black_body"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/lowerswipe"
+        android:padding="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner3" />
+        app:layout_constraintTop_toBottomOf="@+id/tbar">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="224dp"
+            android:layout_height="3dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:background="?android:listDivider"
+            android:backgroundTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linn" />
+
+        <TextView
+            android:id="@+id/txtvie7"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginStart="24dp"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center"
+            android:text="Pickup Time:"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout5" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spinner3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:background="@drawable/style_spinner3"
+            android:overlapAnchor="false"
+            android:padding="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/continue_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtvie7"
+            app:layout_constraintVertical_bias="0.35" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center"
+            android:text="Rent bike for"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/spinner"
+            app:layout_constraintEnd_toEndOf="@+id/spinner"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/spinner"
+            app:layout_constraintTop_toBottomOf="@+id/txtvie6"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <Button
+            android:id="@+id/continue_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/rounded_button"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:text="Continue To Payment"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/txtView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center"
+            android:text="Mode of payment :"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/spinner3"
+            app:layout_constraintStart_toStartOf="@+id/spinner3" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spinner"
+            android:layout_width="148dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+
+            android:background="@drawable/style_spinner3"
+            android:overlapAnchor="false"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtvie6"
+            app:layout_constraintVertical_bias="0.65" />
+
+        <TextView
+            android:id="@+id/txt44"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center"
+            android:text="Rs"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/est_price"
+            app:layout_constraintEnd_toStartOf="@+id/est_price"
+            app:layout_constraintTop_toTopOf="@+id/est_price" />
+
+        <TextView
+            android:id="@+id/txtvie6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/roboto_black"
+            android:gravity="center"
+            android:text="Book your ride"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="2dp"
+            app:layout_constraintBottom_toTopOf="@+id/continue_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txtvie7"
+            app:layout_constraintTop_toBottomOf="@+id/view"
+            app:layout_constraintVertical_bias="0.50">
+
+            <EditText
+                android:id="@+id/hrs_dis"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/selectedrect"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:inputType="number"
+                android:text="00"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/hi_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:gravity="center"
+                android:text=":"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/min_dis"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/selectedrect"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:inputType="number"
+                android:text="00"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spinner2"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:background="@drawable/style_spinner2"
+                android:outlineAmbientShadowColor="@color/white"
+                android:overlapAnchor="false" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/est_price"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="107dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/selectedrect"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center"
+            android:text="40"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/spinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/spinner"
+            app:layout_constraintTop_toTopOf="@+id/spinner" />
+
+        <LinearLayout
+            android:id="@+id/linn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/gate_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="8dp"
+                    app:srcCompat="@drawable/ic_icon_gate_ganga" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/pickup_display"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="Pickup"
+                        android:textColor="@color/homescreenfont"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/gate_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:includeFontPadding="false"
+                        android:text="Ganga Gate"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/bike_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    app:srcCompat="@drawable/ic_icon_bicycle1" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/bike_display"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bike"
+                        android:textColor="@color/homescreenfont"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/bike_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="true"
+                        android:text="Speed Cruiser"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_black"
+            android:text="Review your details"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
