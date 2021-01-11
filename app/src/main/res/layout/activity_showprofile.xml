@@ -5,15 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context=".Showprofile">
-    
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="150dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:id="@+id/imageView_sp"
-        android:background="@drawable/ic_launcher_background"/>
+
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/imageview_sp"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_icon_person"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -91,24 +101,22 @@
         <TextView
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Email"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
             android:layout_marginLeft="30dp"
             android:padding="10dp"
+            android:text="Bio"
             android:textAlignment="viewStart"
-            />
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
 
         <TextView
+            android:id="@+id/bio_tv_sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Email"
-            android:textSize="20sp"
             android:layout_marginLeft="30dp"
             android:padding="10dp"
+            android:text="Bio"
             android:textAlignment="viewStart"
-            android:id="@+id/email_tv_sp"
-            />
+            android:textSize="20sp" />
 
 
 
@@ -153,14 +161,12 @@
         android:id="@+id/floatingbtn_sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorPrimary"
         android:layout_gravity="end"
-        android:layout_marginRight="70dp"
         android:layout_marginTop="50dp"
+        android:layout_marginRight="70dp"
+        android:backgroundTint="@color/colorGreenDark"
 
-        android:src="@drawable/ic_my_icon"/>
-
-
+        android:src="@android:drawable/ic_menu_edit" />
 
 
 </LinearLayout>

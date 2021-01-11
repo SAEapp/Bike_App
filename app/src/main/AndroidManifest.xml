@@ -3,7 +3,7 @@
     package="com.example.bikeapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,16 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PaymentActivity"
-            android:parentActivityName=".BookingActivity"/>
+        <activity android:name=".UpdateUser"></activity>
+        <activity
+            android:name=".PaymentActivity"
+            android:parentActivityName=".BookingActivity" />
         <activity
             android:name=".BookingActivity"
             android:parentActivityName=".HomePage" />
         <activity android:name=".HomePage" />
         <activity android:name=".Details" />
         <activity android:name=".PhoneAuth" />
-        <activity android:name=".CreateProfile"/>
-        <activity android:name=".Showprofile"/>
+        <activity android:name=".CreateProfile" />
+        <activity android:name=".Showprofile" />
         <activity android:name=".Login" />
         <activity android:name=".Register">
             <intent-filter>

@@ -8,7 +8,6 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -25,6 +24,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Transaction;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -34,8 +35,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class CreateProfile extends AppCompatActivity {
-
+public class UpdateUser extends AppCompatActivity {
     EditText et_name,et_age,et_phno,et_bio;
     Button button;
     ProgressBar progressBar;
@@ -51,15 +51,15 @@ public class CreateProfile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_profile);
+        setContentView(R.layout.activity_update_user);
 
-        imageView = findViewById(R.id.imageview_cp);
-        et_name = findViewById(R.id.name_et_cp);
-        et_age = findViewById(R.id.age_et_cp);
-        et_bio = findViewById(R.id.bio_et_cp);
-        et_phno = findViewById(R.id.phno_et_cp);
-        button = findViewById(R.id.save_profile_btn_cp);
-        progressBar = findViewById(R.id.progressbar_cp);
+        imageView = findViewById(R.id.imageview_uu);
+        et_name = findViewById(R.id.name_et_uu);
+        et_age = findViewById(R.id.age_et_uu);
+        et_bio = findViewById(R.id.bio_et_uu);
+        et_phno = findViewById(R.id.phno_et_uu);
+        button = findViewById(R.id.save_profile_btn_uu);
+        progressBar = findViewById(R.id.progressbar_uu);
 
         documentReference = db.collection("user").document("profile");
         storageReference = firebaseStorage.getInstance().getReference("profile images");
@@ -67,22 +67,18 @@ public class CreateProfile extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UploadData();
+                Updateprofile();
             }
         });
-
     }
 
-    public void ChooseImage(View view) {
 
+
+    public void ChooseImage(View view) {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent,PICK_IMAGE);
-
-
-
-
     }
 
     @Override
@@ -103,15 +99,13 @@ public class CreateProfile extends AppCompatActivity {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
-    private void UploadData()
-    {
-         final String name = et_name.getText().toString();
-         final String age = et_age.getText().toString();
-         final String bio = et_bio.getText().toString();
-         final String phno = et_phno.getText().toString();
+    private void Updateprofile() {
+        final String name = et_name.getText().toString();
+        final String age = et_age.getText().toString();
+        final String bio = et_bio.getText().toString();
+        final String phno = et_phno.getText().toString();
 
-        if (!TextUtils.isEmpty(name) || !TextUtils.isEmpty(age) || !TextUtils.isEmpty(bio) || !TextUtils.isEmpty(phno) || imageUri!=null) {
-
+        if(imageUri!=null) {
             progressBar.setVisibility(View.VISIBLE);
 
             final StorageReference reference = storageReference.child(System.currentTimeMillis() + "." + getFileExt(imageUri));
@@ -133,37 +127,43 @@ public class CreateProfile extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Uri> task) {
 
                             if (task.isSuccessful()){
-                                Uri downloadUri = task.getResult();
-                                Map<String ,String > profile = new HashMap<>();
-                                profile.put("name",name);
-                                profile.put("age",age);
-                                profile.put("phno",phno);
-                                profile.put("bio",bio);
-                                assert downloadUri != null;
-                                profile.put("url",downloadUri.toString());
+                                final Uri downloadUri = task.getResult();
+                                final DocumentReference sfDocRef = db.collection("user").document("profile");
 
-                                documentReference.set(profile)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-
-                                                progressBar.setVisibility(View.INVISIBLE);
-                                                Toast.makeText(CreateProfile.this, "Profile Created", Toast.LENGTH_SHORT).show();
-                                                Intent intent = new Intent(CreateProfile.this,Showprofile.class);
-                                                startActivity(intent);
+                                db.runTransaction(new Transaction.Function<Void>() {
+                                    @Override
+                                    public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+                                        DocumentSnapshot snapshot = transaction.get(sfDocRef);
 
 
 
-                                            }
-                                        })
+                                      //  transaction.update(sfDocRef, "population", newPopulation);
+                                         transaction.update(sfDocRef,"name",name);
+                                        transaction.update(sfDocRef,"age",age);
+                                        transaction.update(sfDocRef,"bio",bio);
+                                        transaction.update(sfDocRef,"phno",phno);
+                                        transaction.update(sfDocRef,"url",downloadUri.toString());
+
+
+                                        return null;
+                                    }
+                                }).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        progressBar.setVisibility(View.INVISIBLE);
+                                        Toast.makeText(UpdateUser.this, "Profile Created", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(UpdateUser.this,Showprofile.class);
+                                        startActivity(intent);
+
+
+                                    }
+                                })
                                         .addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(CreateProfile.this, "Failed!", Toast.LENGTH_SHORT).show();
 
                                             }
                                         });
-
 
 
                             }
@@ -177,11 +177,49 @@ public class CreateProfile extends AppCompatActivity {
                         }
                     });
         }else{
-            Toast.makeText(this, "All fields required!", Toast.LENGTH_SHORT).show();
+            final DocumentReference sfDocRef = db.collection("user").document("profile");
+
+            db.runTransaction(new Transaction.Function<Void>() {
+                @Override
+                public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+                    DocumentSnapshot snapshot = transaction.get(sfDocRef);
+
+
+
+                    //  transaction.update(sfDocRef, "population", newPopulation);
+                    transaction.update(sfDocRef,"name",name);
+                    transaction.update(sfDocRef,"age",age);
+                    transaction.update(sfDocRef,"bio",bio);
+                    transaction.update(sfDocRef,"phno",phno);
+
+
+
+                    return null;
+                }
+            }).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    Toast.makeText(UpdateUser.this, "Profile Created", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(UpdateUser.this,Showprofile.class);
+                    startActivity(intent);
+
+                }
+            })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    });
+
 
         }
 
+
     }
+
+
 
     @Override
     protected void onStart() {
@@ -196,9 +234,9 @@ public class CreateProfile extends AppCompatActivity {
                             String age_result = task.getResult().getString("age");
                             String bio_result = task.getResult().getString("bio");
                             String phno_result = task.getResult().getString("phno");
-                            String Url = task.getResult().getString("url");
+                          //  String Url = task.getResult().getString("url");
 
-                            Picasso.get().load(Url).into(imageView);
+                          //  Picasso.get().load(Url).into(imageView);
 
                             et_name.setText(name_result);
                             et_age.setText(age_result);
@@ -208,7 +246,7 @@ public class CreateProfile extends AppCompatActivity {
 
 
                         }else {
-                            Toast.makeText(CreateProfile.this, "No Profile exists!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UpdateUser.this, "No Profile exists!", Toast.LENGTH_SHORT).show();
                         }
 
                     }
