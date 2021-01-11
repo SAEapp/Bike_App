@@ -31,7 +31,7 @@ public class Showprofile extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     DocumentReference documentReference;
     ImageView imageView;
-    TextView nameEt,ageEt,emailEt,phnoEt;
+    TextView nameEt,ageEt,bioEt,phnoEt;
     FloatingActionButton floatingActionButton;
 
 
@@ -42,10 +42,10 @@ public class Showprofile extends AppCompatActivity {
         setContentView(R.layout.activity_showprofile);
 
         floatingActionButton = findViewById(R.id.floatingbtn_sp);
-        imageView = findViewById(R.id.imageView_sp);
+        imageView = findViewById(R.id.imageview_sp);
         nameEt = findViewById(R.id.name_tv_sp);
         ageEt = findViewById(R.id.age_tv_sp);
-        emailEt = findViewById(R.id.email_tv_sp);
+       bioEt = findViewById(R.id.bio_tv_sp);
         phnoEt = findViewById(R.id.phno_tv_sp);
 
         documentReference = db.collection("user").document("profile");
@@ -54,7 +54,7 @@ public class Showprofile extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Showprofile.this,CreateProfile.class);
+                Intent intent = new Intent(Showprofile.this,UpdateUser.class);
                 startActivity(intent);
             }
         });
@@ -74,7 +74,7 @@ public class Showprofile extends AppCompatActivity {
                         if (task.getResult().exists()){
                             String name_result = task.getResult().getString("name");
                             String age_result = task.getResult().getString("age");
-                            String email_result = task.getResult().getString("email");
+                            String bio_result = task.getResult().getString("bio");
                             String phno_result = task.getResult().getString("phno");
                             String Url = task.getResult().getString("url");
 
@@ -82,7 +82,7 @@ public class Showprofile extends AppCompatActivity {
 
                             nameEt.setText(name_result);
                             ageEt.setText(age_result);
-                            emailEt.setText(email_result);
+                            bioEt.setText(bio_result);
                             phnoEt.setText(phno_result);
 
                             

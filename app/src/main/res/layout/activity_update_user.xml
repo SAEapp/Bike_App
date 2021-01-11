@@ -8,15 +8,22 @@
     android:gravity="center"
     tools:context=".CreateProfile">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose new image or let the old one continue"/>
+
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/imageview_cp"
+        android:id="@+id/imageview_uu"
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:src="@drawable/ic_icon_person"
+        android:clickable="true"
+        android:onClick="ChooseImage"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,7 +31,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/name_et_cp"
+        android:id="@+id/name_et_uu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -34,7 +41,7 @@
         android:textColor="@android:color/black" />
 
     <EditText
-        android:id="@+id/age_et_cp"
+        android:id="@+id/age_et_uu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -45,7 +52,7 @@
 
 
     <EditText
-        android:id="@+id/bio_et_cp"
+        android:id="@+id/bio_et_uu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -55,7 +62,7 @@
         android:textColor="@android:color/black" />
 
     <EditText
-        android:id="@+id/phno_et_cp"
+        android:id="@+id/phno_et_uu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -68,9 +75,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Save Profile"
-        android:id="@+id/save_profile_btn_cp"
+        android:id="@+id/save_profile_btn_uu"
         android:layout_margin="10dp"/>
-    
+
     <ProgressBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -78,7 +85,7 @@
         android:indeterminate="true"
         android:indeterminateTint="@color/colorPrimary"
         android:visibility="invisible"
-        android:id="@+id/progressbar_cp"/>
+        android:id="@+id/progressbar_uu"/>
 
 
 
