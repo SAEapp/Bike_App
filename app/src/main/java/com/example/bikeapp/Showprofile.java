@@ -14,6 +14,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -33,6 +35,9 @@ public class Showprofile extends AppCompatActivity {
     ImageView imageView;
     TextView nameEt,ageEt,bioEt,phnoEt;
     FloatingActionButton floatingActionButton;
+    FirebaseAuth fAuth;
+   private String userID;
+   private FirebaseUser user;
 
 
 
@@ -48,7 +53,12 @@ public class Showprofile extends AppCompatActivity {
        bioEt = findViewById(R.id.bio_tv_sp);
         phnoEt = findViewById(R.id.phno_tv_sp);
 
-        documentReference = db.collection("user").document("profile");
+        fAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        userID = fAuth.getCurrentUser().getUid();
+        user = fAuth.getCurrentUser();
+
+        documentReference = db.collection("users").document(userID);
         storageReference = firebaseStorage.getInstance().getReference("profile images");
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +88,12 @@ public class Showprofile extends AppCompatActivity {
                             String phno_result = task.getResult().getString("phno");
                             String Url = task.getResult().getString("url");
 
-                            Picasso.get().load(Url).into(imageView);
+                            if (Url.isEmpty()) {
+                                imageView.setImageResource(R.drawable.ic_icon_person);
+                            }
+                            else{
+                                Picasso.get().load(Url).into(imageView);
+                            }
 
                             nameEt.setText(name_result);
                             ageEt.setText(age_result);

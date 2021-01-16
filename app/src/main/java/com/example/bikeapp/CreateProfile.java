@@ -22,6 +22,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -42,11 +44,14 @@ public class CreateProfile extends AppCompatActivity {
     private Uri imageUri;
     private static final int PICK_IMAGE=1;
     UploadTask uploadTask;
+    private FirebaseAuth fAuth;
+    private String userID;
     FirebaseStorage firebaseStorage;
     StorageReference storageReference;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseFirestore db;
     DocumentReference documentReference;
     ImageView imageView;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +66,14 @@ public class CreateProfile extends AppCompatActivity {
         button = findViewById(R.id.save_profile_btn_cp);
         progressBar = findViewById(R.id.progressbar_cp);
 
-        documentReference = db.collection("user").document("profile");
+        fAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        userID = fAuth.getCurrentUser().getUid();
+        user = fAuth.getCurrentUser();
+
+        documentReference = db.collection("users").document(userID);
         storageReference = firebaseStorage.getInstance().getReference("profile images");
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +123,7 @@ public class CreateProfile extends AppCompatActivity {
 
         if (!TextUtils.isEmpty(name) || !TextUtils.isEmpty(age) || !TextUtils.isEmpty(bio) || !TextUtils.isEmpty(phno) || imageUri!=null) {
 
+
             progressBar.setVisibility(View.VISIBLE);
 
             final StorageReference reference = storageReference.child(System.currentTimeMillis() + "." + getFileExt(imageUri));
@@ -134,15 +146,15 @@ public class CreateProfile extends AppCompatActivity {
 
                             if (task.isSuccessful()){
                                 Uri downloadUri = task.getResult();
-                                Map<String ,String > profile = new HashMap<>();
-                                profile.put("name",name);
-                                profile.put("age",age);
-                                profile.put("phno",phno);
-                                profile.put("bio",bio);
+                                Map<String ,String > user = new HashMap<>();
+                                user.put("name",name);
+                                user.put("age",age);
+                                user.put("phno",phno);
+                                user.put("bio",bio);
                                 assert downloadUri != null;
-                                profile.put("url",downloadUri.toString());
+                                user.put("url",downloadUri.toString());
 
-                                documentReference.set(profile)
+                                documentReference.set(user)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
@@ -198,7 +210,13 @@ public class CreateProfile extends AppCompatActivity {
                             String phno_result = task.getResult().getString("phno");
                             String Url = task.getResult().getString("url");
 
-                            Picasso.get().load(Url).into(imageView);
+                            if (Url.isEmpty()) {
+                                imageView.setImageResource(R.drawable.ic_icon_person);
+                            } else{
+                                Picasso.get().load(Url).into(imageView);
+                            }
+
+                            //Picasso.get().load(Url).into(imageView);
 
                             et_name.setText(name_result);
                             et_age.setText(age_result);
