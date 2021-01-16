@@ -21,6 +21,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -47,6 +49,9 @@ public class UpdateUser extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     DocumentReference documentReference;
     ImageView imageView;
+    FirebaseAuth fAuth;
+    private String userID;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +66,12 @@ public class UpdateUser extends AppCompatActivity {
         button = findViewById(R.id.save_profile_btn_uu);
         progressBar = findViewById(R.id.progressbar_uu);
 
-        documentReference = db.collection("user").document("profile");
+        fAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        userID = fAuth.getCurrentUser().getUid();
+        user = fAuth.getCurrentUser();
+
+        documentReference = db.collection("users").document(userID);
         storageReference = firebaseStorage.getInstance().getReference("profile images");
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -128,7 +138,7 @@ public class UpdateUser extends AppCompatActivity {
 
                             if (task.isSuccessful()){
                                 final Uri downloadUri = task.getResult();
-                                final DocumentReference sfDocRef = db.collection("user").document("profile");
+                                final DocumentReference sfDocRef = db.collection("users").document(userID);
 
                                 db.runTransaction(new Transaction.Function<Void>() {
                                     @Override
@@ -177,7 +187,7 @@ public class UpdateUser extends AppCompatActivity {
                         }
                     });
         }else{
-            final DocumentReference sfDocRef = db.collection("user").document("profile");
+            final DocumentReference sfDocRef = db.collection("users").document(userID);
 
             db.runTransaction(new Transaction.Function<Void>() {
                 @Override

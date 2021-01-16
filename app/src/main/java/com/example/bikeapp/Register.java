@@ -173,6 +173,11 @@ public class Register extends AppCompatActivity {
                             user.put("est_price",0);
                             user.put("current_pickup","");
                             user.put("bike_selected","");
+                            user.put("age","");
+                            user.put("name","");
+                            user.put("bio","");
+                            user.put("phno","");
+                            user.put("url","");
 
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -197,7 +202,7 @@ public class Register extends AppCompatActivity {
                     }
                 });
             }
-        });
+        });//register button clicked...
 
         fbBtn.setOnClickListener(new View.OnClickListener() {
             @Override
