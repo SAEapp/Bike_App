@@ -28,11 +28,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -40,12 +44,13 @@ import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 
 public class Register extends AppCompatActivity {
     public static final String TAG = "TAG";
-    private EditText mFullName, mPassword,mEmail,codeEnter,mPhone;
-    private Button mRegisterBtn,fbBtn;
+    private EditText mFullName, mPassword,mEmail,codeEnter,mPhone,mOTP;
+    private Button mRegisterBtn,fbBtn,mConfirmBtn;
     //private Button google_signinBtn;
     private GoogleSignInClient mgoogleSignInClient;
     private TextView mLoginBtn,state,alreadyReg,or;
@@ -59,19 +64,20 @@ public class Register extends AppCompatActivity {
     String verificationId;
     PhoneAuthProvider.ForceResendingToken token;
     Boolean verificationInProgress=false;
+    String codeSent;
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        FirebaseUser user = fAuth.getCurrentUser();
-        if(user != null){
-
-            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(intent);
-
-        }
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//
+//        FirebaseUser user = fAuth.getCurrentUser();
+//        if(user != null){
+//
+//            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+//            startActivity(intent);
+//
+//        }
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +88,9 @@ public class Register extends AppCompatActivity {
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
         mPhone = findViewById(R.id.phnNo);
+        mOTP = findViewById(R.id.otp);
         mRegisterBtn = findViewById(R.id.registerBtn);
+        mConfirmBtn = findViewById(R.id.confirmBtn);
         fbBtn = findViewById(R.id.fbBtn);
         //phnNo = findViewById(R.id.phnNo);
         mLoginBtn = findViewById(R.id.createText);
@@ -131,6 +139,10 @@ public class Register extends AppCompatActivity {
                 if (TextUtils.isEmpty(password)) {
                     mPassword.setError("Password is Required!");
                 }
+                if (TextUtils.isEmpty(phone)) {
+                    mEmail.setError("Phone is Required!");
+                    return;
+                }
                 if (password.length() < 6) {
                     mPassword.setError("Password too short!");
                     return;
@@ -178,6 +190,7 @@ public class Register extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Log.d(TAG, "onSuccess: user Profile is created for " + userID);
+                                    sendVerificationCode();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -185,10 +198,10 @@ public class Register extends AppCompatActivity {
                                     Log.d(TAG, "onFailure: " + e.toString());
                                 }
                             });
-
-                            startActivity(new Intent(getApplicationContext(), HomePage.class));
-                            overridePendingTransition(android.R.anim.fade_in, R.anim.zoom);
-                            finish();
+                            //sendVerificationCode();
+//                            startActivity(new Intent(getApplicationContext(), HomePage.class));
+//                            overridePendingTransition(android.R.anim.fade_in, R.anim.zoom);
+//                            finish();
 
                         } else {
                             Toast.makeText(Register.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -196,6 +209,13 @@ public class Register extends AppCompatActivity {
                         }
                     }
                 });
+            }
+        });
+
+        mConfirmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                verifySignInCode();
             }
         });
 
@@ -216,7 +236,7 @@ public class Register extends AppCompatActivity {
         });
 
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                //.requestIdToken(getString(R.string.default_web_client_id))
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
@@ -230,6 +250,64 @@ public class Register extends AppCompatActivity {
         });
 
     }
+
+    private void verifySignInCode() {
+        String code = mOTP.getText().toString();
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(codeSent, code);
+        signInWithPhoneAuthCredential(credential);
+    }
+
+    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+        fAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+
+                            startActivity(new Intent(getApplicationContext(), HomePage.class));
+                            overridePendingTransition(android.R.anim.fade_in, R.anim.zoom);
+                            finish();
+
+                        } else {
+                            // Sign in failed, display a message and update the UI
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                                Toast.makeText(Register.this, "Invalid Verification Code", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
+    }
+
+    private void sendVerificationCode() {
+        String phonee = "+91"+ mPhone.getText().toString();
+        PhoneAuthOptions options =
+                PhoneAuthOptions.newBuilder(fAuth)
+                        .setPhoneNumber(phonee)       // Phone number to verify
+                        .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                        .setActivity(this)                 // Activity (for callback binding)
+                        .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
+                        .build();
+        PhoneAuthProvider.verifyPhoneNumber(options);
+    }
+
+    PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+        @Override
+        public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+
+        }
+
+        @Override
+        public void onVerificationFailed(@NonNull FirebaseException e) {
+
+        }
+
+        @Override
+        public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+            super.onCodeSent(s, forceResendingToken);
+            codeSent = s;
+        }
+    };
 
     private void signIn() {
 
@@ -269,8 +347,8 @@ public class Register extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = fAuth.getCurrentUser();
                             updateUI(user);
-                            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                            startActivity(intent);
+//                            Intent intent = new Intent(getApplicationContext(),HomePage.class);
+//                            startActivity(intent);
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -303,7 +381,7 @@ public class Register extends AppCompatActivity {
                 @Override
                 public void onSuccess(Void aVoid) {
                     Log.d("tag", "onSuccess: User Profile Created." + userID);
-                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                    startActivity(new Intent(getApplicationContext(),HomePage.class));
                     finish();
                 }
             }).addOnFailureListener(new OnFailureListener() {

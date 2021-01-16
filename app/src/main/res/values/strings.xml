@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Bike App</string>
     <string name="phone">Phone</string>
+    <string name="otp">OTP</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login">LOGIN</string>

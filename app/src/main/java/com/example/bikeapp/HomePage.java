@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -31,7 +32,7 @@ public class HomePage extends AppCompatActivity {
     private List<HomeModel> homeModel;
     private ExampleAdapter exampleAdapter;
     private TextView BicycleName, Price, avail;
-    private Button rent, ganga, yamuna, saraswati;
+    private Button rent, ganga, yamuna, saraswati,logOutBtn;
     private Integer Gate, Bicycle;
     private FirebaseFirestore firestore;
     private AlphaAnimation fadeout,fadeIn;
@@ -52,6 +53,7 @@ public class HomePage extends AppCompatActivity {
         Bicycle=0;
 
         BicycleName=findViewById(R.id.bicycleName);
+        logOutBtn=findViewById(R.id.logout);
         Price=findViewById(R.id.price);
         avail=findViewById(R.id.avail);
 
@@ -133,6 +135,16 @@ public class HomePage extends AppCompatActivity {
 
                 ganga.setBackground(getDrawable(R.drawable.rectangle));
                 ganga.setTextColor(getColor(R.color.white));
+
+            }
+        });
+
+        logOutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getApplicationContext(), Register.class));
+                finish();
 
             }
         });
