@@ -38,7 +38,7 @@ import java.util.Objects;
 
 public class CreateProfile extends AppCompatActivity {
 
-    EditText et_name,et_age,et_phno,et_bio;
+    EditText fName,et_age,phone,et_bio,email;
     Button button;
     ProgressBar progressBar;
     private Uri imageUri;
@@ -59,10 +59,11 @@ public class CreateProfile extends AppCompatActivity {
         setContentView(R.layout.activity_create_profile);
 
         imageView = findViewById(R.id.imageview_cp);
-        et_name = findViewById(R.id.name_et_cp);
+        fName = findViewById(R.id.name_et_cp);
+        email = findViewById(R.id.email_et_cp);
         et_age = findViewById(R.id.age_et_cp);
         et_bio = findViewById(R.id.bio_et_cp);
-        et_phno = findViewById(R.id.phno_et_cp);
+        phone = findViewById(R.id.phno_et_cp);
         button = findViewById(R.id.save_profile_btn_cp);
         progressBar = findViewById(R.id.progressbar_cp);
 
@@ -116,12 +117,13 @@ public class CreateProfile extends AppCompatActivity {
 
     private void UploadData()
     {
-         final String name = et_name.getText().toString();
+         final String name = fName.getText().toString();
          final String age = et_age.getText().toString();
          final String bio = et_bio.getText().toString();
-         final String phno = et_phno.getText().toString();
+         final String phno = phone.getText().toString();
+         final String em = email.getText().toString();
 
-        if (!TextUtils.isEmpty(name) || !TextUtils.isEmpty(age) || !TextUtils.isEmpty(bio) || !TextUtils.isEmpty(phno) || imageUri!=null) {
+        if (!TextUtils.isEmpty(name) || !TextUtils.isEmpty(age) || !TextUtils.isEmpty(bio) || !TextUtils.isEmpty(phno) || !TextUtils.isEmpty(em) || imageUri!=null) {
 
 
             progressBar.setVisibility(View.VISIBLE);
@@ -147,9 +149,10 @@ public class CreateProfile extends AppCompatActivity {
                             if (task.isSuccessful()){
                                 Uri downloadUri = task.getResult();
                                 Map<String ,String > user = new HashMap<>();
-                                user.put("name",name);
+                                user.put("fName",name);
                                 user.put("age",age);
-                                user.put("phno",phno);
+                                user.put("phone",phno);
+                                user.put("email",em);
                                 user.put("bio",bio);
                                 assert downloadUri != null;
                                 user.put("url",downloadUri.toString());
@@ -204,10 +207,11 @@ public class CreateProfile extends AppCompatActivity {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
                         if (task.getResult().exists()){
-                            String name_result = task.getResult().getString("name");
+                            String name_result = task.getResult().getString("fName");
                             String age_result = task.getResult().getString("age");
                             String bio_result = task.getResult().getString("bio");
-                            String phno_result = task.getResult().getString("phno");
+                            String phno_result = task.getResult().getString("phone");
+                            String em_result = task.getResult().getString("email");
                             String Url = task.getResult().getString("url");
 
                             if (Url.isEmpty()) {
@@ -218,10 +222,11 @@ public class CreateProfile extends AppCompatActivity {
 
                             //Picasso.get().load(Url).into(imageView);
 
-                            et_name.setText(name_result);
+                            fName.setText(name_result);
                             et_age.setText(age_result);
                             et_bio.setText(bio_result);
-                            et_phno.setText(phno_result);
+                            phone.setText(phno_result);
+                            email.setText(em_result);
 
 
 

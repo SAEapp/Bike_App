@@ -33,7 +33,7 @@ public class Showprofile extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     DocumentReference documentReference;
     ImageView imageView;
-    TextView nameEt,ageEt,bioEt,phnoEt;
+    TextView nameEt,ageEt,bioEt,phnoEt,emailEt;
     FloatingActionButton floatingActionButton;
     FirebaseAuth fAuth;
    private String userID;
@@ -51,6 +51,7 @@ public class Showprofile extends AppCompatActivity {
         nameEt = findViewById(R.id.name_tv_sp);
         ageEt = findViewById(R.id.age_tv_sp);
        bioEt = findViewById(R.id.bio_tv_sp);
+       emailEt = findViewById(R.id.email_tv_sp);
         phnoEt = findViewById(R.id.phno_tv_sp);
 
         fAuth = FirebaseAuth.getInstance();
@@ -82,10 +83,11 @@ public class Showprofile extends AppCompatActivity {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
                         if (task.getResult().exists()){
-                            String name_result = task.getResult().getString("name");
+                            String name_result = task.getResult().getString("fName");
                             String age_result = task.getResult().getString("age");
                             String bio_result = task.getResult().getString("bio");
-                            String phno_result = task.getResult().getString("phno");
+                            String phno_result = task.getResult().getString("phone");
+                            String email_result = task.getResult().getString("email");
                             String Url = task.getResult().getString("url");
 
                             if (Url.isEmpty()) {
@@ -99,6 +101,7 @@ public class Showprofile extends AppCompatActivity {
                             ageEt.setText(age_result);
                             bioEt.setText(bio_result);
                             phnoEt.setText(phno_result);
+                            emailEt.setText(email_result);
 
                             
 

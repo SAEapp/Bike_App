@@ -123,6 +123,40 @@
 
     </LinearLayout>
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:layout_marginLeft="30dp"
+            android:padding="10dp"
+            android:textAlignment="viewStart"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textSize="20sp"
+            android:layout_marginLeft="30dp"
+            android:padding="10dp"
+            android:textAlignment="viewStart"
+            android:id="@+id/email_tv_sp"
+            />
+
+
+
+
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -134,7 +168,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:padding="10dp"
-            android:text="Alternate Phone No."
+            android:text="Phone Number"
             android:textAlignment="viewStart"
             android:textColor="@android:color/black"
             android:textSize="20sp" />

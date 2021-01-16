@@ -58,17 +58,17 @@
         android:layout_margin="10dp"
         android:backgroundTint="@color/colorFacebookBtn"
         android:hint="Bio"
-        android:inputType="textEmailAddress"
+        android:inputType="textPersonName"
         android:textColor="@android:color/black" />
 
     <EditText
-        android:id="@+id/phno_et_uu"
+        android:id="@+id/email_et_uu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:backgroundTint="@color/colorFacebookBtn"
-        android:hint="Alternate Phone No."
-        android:inputType="number"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
         android:textColor="@android:color/black" />
 
     <Button

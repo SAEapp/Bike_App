@@ -38,7 +38,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class UpdateUser extends AppCompatActivity {
-    EditText et_name,et_age,et_phno,et_bio;
+    EditText et_name,et_age,et_email,et_bio;
     Button button;
     ProgressBar progressBar;
     private Uri imageUri;
@@ -62,7 +62,7 @@ public class UpdateUser extends AppCompatActivity {
         et_name = findViewById(R.id.name_et_uu);
         et_age = findViewById(R.id.age_et_uu);
         et_bio = findViewById(R.id.bio_et_uu);
-        et_phno = findViewById(R.id.phno_et_uu);
+        et_email = findViewById(R.id.email_et_uu);
         button = findViewById(R.id.save_profile_btn_uu);
         progressBar = findViewById(R.id.progressbar_uu);
 
@@ -113,7 +113,7 @@ public class UpdateUser extends AppCompatActivity {
         final String name = et_name.getText().toString();
         final String age = et_age.getText().toString();
         final String bio = et_bio.getText().toString();
-        final String phno = et_phno.getText().toString();
+        final String email = et_email.getText().toString();
 
         if(imageUri!=null) {
             progressBar.setVisibility(View.VISIBLE);
@@ -148,10 +148,11 @@ public class UpdateUser extends AppCompatActivity {
 
 
                                       //  transaction.update(sfDocRef, "population", newPopulation);
-                                         transaction.update(sfDocRef,"name",name);
+                                         transaction.update(sfDocRef,"fName",name);
                                         transaction.update(sfDocRef,"age",age);
                                         transaction.update(sfDocRef,"bio",bio);
-                                        transaction.update(sfDocRef,"phno",phno);
+                                        transaction.update(sfDocRef,"email",email);
+                                        assert downloadUri != null;
                                         transaction.update(sfDocRef,"url",downloadUri.toString());
 
 
@@ -197,10 +198,10 @@ public class UpdateUser extends AppCompatActivity {
 
 
                     //  transaction.update(sfDocRef, "population", newPopulation);
-                    transaction.update(sfDocRef,"name",name);
+                    transaction.update(sfDocRef,"fName",name);
                     transaction.update(sfDocRef,"age",age);
                     transaction.update(sfDocRef,"bio",bio);
-                    transaction.update(sfDocRef,"phno",phno);
+                    transaction.update(sfDocRef,"email",email);
 
 
 
@@ -240,10 +241,12 @@ public class UpdateUser extends AppCompatActivity {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
                         if (task.getResult().exists()){
-                            String name_result = task.getResult().getString("name");
+                            String name_result = task.getResult().getString("fName");
                             String age_result = task.getResult().getString("age");
                             String bio_result = task.getResult().getString("bio");
-                            String phno_result = task.getResult().getString("phno");
+                            String email_result = task.getResult().getString("email");
+                         //   String phno_result = task.getResult().getString("phone");
+
                           //  String Url = task.getResult().getString("url");
 
                           //  Picasso.get().load(Url).into(imageView);
@@ -251,7 +254,8 @@ public class UpdateUser extends AppCompatActivity {
                             et_name.setText(name_result);
                             et_age.setText(age_result);
                             et_bio.setText(bio_result);
-                            et_phno.setText(phno_result);
+                            et_email.setText(email_result);
+
 
 
 
