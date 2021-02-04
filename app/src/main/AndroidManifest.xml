@@ -33,6 +33,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
+        <meta-data
+            android:name="com.razorpay.ApiKey"
+            android:value="rzp_test_Zmo8ogaGlYEvQK"
+            />
     </application>
 
 </manifest>
